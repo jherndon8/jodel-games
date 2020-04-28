@@ -1,6 +1,6 @@
 var pixels = new Array;
 var comments = new Array;
-var postID="";
+var postID="5ea8c1ea1ac8d900196fed78";
 init();
 function init() {
     var v = 150;
