@@ -4,8 +4,10 @@ function getPostData(postID, next) {
     if (!postID) {
        return; 
     }
-    document.getElementById("u").innerHTML = ""
-    var url = "https://share.jodel.com/post/" + postID + "/replies";
+    document.getElementById("u").innerHTML = "Reading Comments..."
+    var url = "https://share.jodel.com/post/"
+    document.getElementById("postlink").href=url + "?postId=" + postID;
+    var url = url + postID + "/replies";
     if (next) {
         url = url + "?next=" + next
     }
@@ -62,6 +64,7 @@ function processComments() {
             }
         }
     }
+    document.getElementById("u").innerHTML = ""
 }
 
 getPostData("5ea7c1bf6b8328001af30402")
