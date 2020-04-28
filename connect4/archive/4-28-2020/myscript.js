@@ -6,7 +6,7 @@ function getPostData(postID, next) {
     }
     document.getElementById("u").innerHTML = "Reading Comments..."
     var url = "https://share.jodel.com/post/"
-    document.getElementById("postlink").innerHTML="<iframe frameborder=\"0\" height=\"200px\" width=\"400px\" src=\"https://share.jodel.com/post/preview?postId=" + postID + "\" style=\"border-radius:3px\"></iframe>";
+    document.getElementById("postlink").innerHTML="<iframe frameborder=\"0\" height=\"200px\" width=\"400px\" src=\"https://share.jodel.com/post/preview?postId=\"" + postID + "\" style=\"border-radius:3px\"></iframe>";
     document.getElementById("postlink").innerHTML='<iframe frameborder="0" height="300px" width="600px" src="https://share.jodel.com/post/preview?postId=' + postID + '" style="border-radius:3px"></iframe>'
     var url = url + postID + "/replies";
     if (next) {
@@ -42,7 +42,7 @@ function parse(resp) {
 }
 
 function processComments() {
-    console.log(comments);
+    console.log(JSON.stringify(comments));
     oddPlayers = new Array;
     evenPlayers = new Array;
     oddCount = 0;
@@ -68,7 +68,13 @@ function processComments() {
     document.getElementById("u").innerHTML = ""
 }
 
-getPostData("5ea7c1bf6b8328001af30402")
+var postID = '5ea7c1bf6b8328001af30402';
+console.log(postID)
+document.getElementById("postlink").innerHTML="<iframe frameborder=\"0\" height=\"200px\" width=\"400px\" src=\"https://share.jodel.com/post/preview?postId=" + postID + "\" style=\"border-radius:3px\"></iframe>";
+comments = '[{"user":"OJ","msg":"Same rules as chess from earlier, the first valid move commented by someone who hasn’t made one of the last three moves from their team shall be made"},{"user":"1","msg":"4"},{"user":"OJ","msg":"It doesn’t refresh very well on my phone (iOS safari) but if I go into private browsing it updates just fine"},{"user":"2","msg":"3"},{"user":"2","msg":"Oh wow cool @OJ... You made this?"},{"user":"2","msg":"Itd be cool to embed the post here too"},{"user":"3","msg":"4"},{"user":"4","msg":"4"},{"user":"OJ","msg":"#jodelgames"},{"user":"5","msg":"4"},{"user":"6","msg":"3"},{"user":"7","msg":"3"},{"user":"8","msg":"2"},{"user":"9","msg":"2"},{"user":"10","msg":"1"},{"user":"1","msg":"5"},{"user":"6","msg":"5"},{"user":"OJ","msg":"@6 you made one of the last three moves for your team already. But this is a little slow so I’m gonna change it to you can go every 3 moves instead."},{"user":"3","msg":"5"},{"user":"8","msg":"Evens win! 5! 5!"},{"user":"2","msg":"5"},{"user":"OJ","msg":"Sweet, I’ll archive this explore together"},{"user":"5","msg":"Doom 64"},{"user":"11","msg":"Do it like Twitch plays X, but Jodel answers my Sherlocks, or does build. "},{"user":"1","msg":"Wtf 3 :("}]'
+
+comments = JSON.parse(comments)
+processComments()
 
 function noData()
 {
