@@ -64,10 +64,10 @@ function parse(resp) {
     }
 }
 
-function isColor(strColor){
-  var s = new Option().style;
+const isColor = (strColor) => {
+  const s = new Option().style;
   s.color = strColor;
-  return s.color == strColor;
+  return s.color !== '';
 }
 
 function processComments() {
