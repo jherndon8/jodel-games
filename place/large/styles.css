@@ -1,13 +1,13 @@
 .container {
     margin: auto;
     border-style: solid;
-    width: 480px;
-    height: 480px;
+    width: 450px;
+    height: 450px;
     display: grid-inline;
 }
 
 .cell {
-    width: 30px;
-    height: 30px;
+    width: 3px;
+    height: 3px;
     display: inline-block;
 }

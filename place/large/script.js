@@ -1,9 +1,9 @@
 var pixels = new Array;
 var comments = new Array;
-var postID="5ea90a314afabe001d13efcf";
+var postID="5ea8c1ea1ac8d900196fed78";
 init();
 function init() {
-    var v = 16;
+    var v = 150;
     c = 0;
     var e = document.getElementsByClassName("container")[0];
     for(var i = 0; i < v; i++){
@@ -79,9 +79,9 @@ function processComments() {
         var y = s[1];
         var c = s[2];
         if (c) c = c.trim();
-        if (x >=1 && x <=16 && y >= 1 && y <= 16 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
+        if (x >=1 && x <=150 && y >= 1 && y <= 150 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
             last2[counter++ % 2] = com.user;
-            pixels[16*(y-1)+(x-1)].style.backgroundColor=c;
+            pixels[150*(y-1)+(x-1)].style.backgroundColor=c;
         }
     }
 }
