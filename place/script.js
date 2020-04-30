@@ -73,6 +73,8 @@ const isColor = (strColor) => {
 function processComments() {
     var last2 = new Array;
     var counter = 0;
+    var scores = {};
+    var leadDiv = document.getElementById("leaderboard");
     for (var com of comments) {
         var s = com.msg.split(',');
         var x = s[0];
@@ -82,6 +84,21 @@ function processComments() {
         if (x >=1 && x <=16 && y >= 1 && y <= 16 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
             last2[counter++ % 2] = com.user;
             pixels[16*(y-1)+(x-1)].style.backgroundColor=c;
+            if (!scores[com.user])
+            {
+                scores[com.user] = 1;
+            } else {
+                scores[com.user]++;
+            }            
         }
+    }
+    var leaderboard = []
+    for (var user in scores) {
+        leaderboard.push([scores[user],user])
+    }
+    leaderboard.sort();
+    leaderboard.reverse();
+    for (var val of leaderboard) {
+        leadDiv.innerHTML += '<p align="center">@'+val[1]+': '+val[0]+'</p>'
     }
 }
