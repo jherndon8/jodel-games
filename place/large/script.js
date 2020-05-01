@@ -96,7 +96,7 @@ function processComments() {
     for (var user in scores) {
         leaderboard.push([scores[user],user])
     }
-    leaderboard.sort();
+    leaderboard.sort(function(a,b){return a[0]-b[0];});
     leaderboard.reverse();
     for (var val of leaderboard) {
         leadDiv.innerHTML += '<p align="center">@'+val[1]+': '+val[0]+'</p>' 
