@@ -47,6 +47,7 @@ function processComments() {
     oddCount = 0;
     evenCount = 0;
     moves = 0;
+    document.getElementById("status").innerHTML = "X starts";
     for (const m of comments) {
         if (isBoardMove(m.msg)){
 
