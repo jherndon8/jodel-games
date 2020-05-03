@@ -1,4 +1,8 @@
 var move;
+var seed = 350;
+
+function seedrand() { return  Math.sin(seed++);}
+var state = 1;
 /**
  * 15-puzzle.js
  *
@@ -7,14 +11,13 @@ var move;
  */
 (function(){
 	
-	var state = 1;
 	var puzzle = document.getElementById('puzzle');
 
 	// Creates solved puzzle
 	solve();
 	
 	// Listens for click on puzzle cells
-	puzzle.addEventListener('click', function(e){
+	/*puzzle.addEventListener('click', function(e){
 		if(state == 1){
 			// Enables sliding animation
 			puzzle.className = 'animate';
@@ -25,7 +28,7 @@ var move;
 	// Listens for click on control buttons
 	document.getElementById('solve').addEventListener('click', solve);
 	document.getElementById('scramble').addEventListener('click', scramble);
-
+    */
 	/**
 	 * Creates solved puzzle
 	 *
@@ -65,9 +68,10 @@ var move;
 	 * 
 	 */
 	function shiftCell(cell){
+        console.log(cell);
 		
 		// Checks if selected cell has number
-		if(cell.clasName != 'empty'){
+		if(cell && cell.className != 'empty'){
 			
 			// Tries to get empty adjacent cell
 			var emptyCell = getEmptyAdjacentCell(cell);
@@ -197,13 +201,10 @@ var move;
 		}
 		
 		puzzle.removeAttribute('class');
-		state = 0;
 		
 		var previousCell;
-		var i = 1;
-		var interval = setInterval(function(){
-			if(i <= 100){
-				var adjacent = getAdjacentCells(getEmptyCell());
+		for (var i = 0; i < 500; i++) {
+		    var adjacent = getAdjacentCells(getEmptyCell());
 				if(previousCell){
 					for(var j = adjacent.length-1; j >= 0; j--){
 						if(adjacent[j].innerHTML == previousCell.innerHTML){
@@ -215,12 +216,7 @@ var move;
 				previousCell = adjacent[rand(0, adjacent.length-1)];
 				shiftCell(previousCell);
 				i++;
-			} else {
-				clearInterval(interval);
-				state = 1;
-			}
-		}, 5);
-
+        }		
 	}
 	
 	/**
@@ -229,10 +225,12 @@ var move;
 	 */
 	function rand(from, to){
 
-		return Math.floor(Math.random() * (to - from + 1)) + from;
+		return Math.floor(seedrand() * (to - from + 1)) + from;
 
 	}
 
     move = function(n){shiftCell(document.getElementsByTagName('span')[n-1])};
+
+    scramble();
 
 }());
