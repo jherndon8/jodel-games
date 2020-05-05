@@ -49,7 +49,10 @@ function processComments() {
     moves = 0;
     document.getElementById("status").innerHTML = "X starts";
     for (const m of comments) {
+        console.log(m.msg);
+        console.log(m.msg.charCodeAt(0));
         if (isBoardMove(m.msg)){
+            console.log(m.msg);
 
             if (m.user % 2 === 0 && moves === 1 && !evenPlayers.includes(m.user)) {
                 evenPlayers[evenCount++ % 2] = m.user
