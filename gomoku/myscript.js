@@ -5,8 +5,7 @@ function getPostData(postID, next) {
        return; 
     }
     var url = "https://share.jodel.com/post/"
-    document.getElementById("postlink").innerHTML="<iframe frameborder=\"0\" height=\"200px\" width=\"400px\" src=\"https://share.jodel.com/post/preview?postId=" + postID + "\" style=\"border-radius:3px\"></iframe>";
-    document.getElementById("postlink").innerHTML='<iframe frameborder="0" height="300px" width="600px" src="https://share.jodel.com/post/preview?postId=' + postID + '" style="border-radius:3px"></iframe>'
+    document.getElementById("postlink").innerHTML='<iframe frameborder="0" height="400px" width="600px" src="https://share.jodel.com/post/preview?postId=' + postID + '" style="border-radius:3px"></iframe>'
     var url = url + postID + "/replies";
     if (next) {
         url = url + "?next=" + next
