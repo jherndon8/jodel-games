@@ -3,7 +3,7 @@ var comments = new Array;
 var postID="5ea90a314afabe001d13efcf";
 init();
 function init() {
-    var v = 20;
+    var v = 16;
     c = 0;
     var e = document.getElementsByClassName("container")[0];
     for(var i = 0; i < v; i++){
@@ -44,6 +44,7 @@ function getPostData(postID, next) {
             getPostData(postID, results.next);
         }
         else {
+            console.log("Processing")
             processComments();
         }
         //console.log(results);
@@ -81,9 +82,9 @@ function processComments() {
         var y = s[1];
         var c = s[2];
         if (c) c = c.trim();
-        if (x >=1 && x <=20 && y >= 1 && y <= 20 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
+        if (x >=1 && x <=16 && y >= 1 && y <= 16 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
             last2[counter++ % 2] = com.user;
-            pixels[20*(y-1)+(x-1)].style.backgroundColor=c;
+            pixels[16*(y-1)+(x-1)].style.backgroundColor=c;
             if (!scores[com.user])
             {
                 scores[com.user] = 1;
