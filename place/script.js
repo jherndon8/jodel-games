@@ -1,6 +1,7 @@
 var pixels = new Array;
 var comments = new Array;
 var postID="6089db554d822801aa12a243";
+var show = false;
 init();
 function init() {
     var v = 20;
@@ -12,6 +13,7 @@ function init() {
         for(var x = 1; x <= v; x++){
             var cell = document.createElement("div");
             cell.className = "cell";
+            cell.innerText=".";
             pixels[c++] = cell
             row.appendChild(cell);
         }
@@ -86,6 +88,7 @@ function processComments() {
         if (x >=1 && x <=20 && y >= 1 && y <= 20 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
             last2[counter++ % 2] = com.user;
             pixels[20*(y-1)+(x-1)].style.backgroundColor=c;
+            pixels[20*(y-1)+(x-1)].innerText = com.user;
             if (!scores[com.user])
             {
                 scores[com.user] = 1;
@@ -104,4 +107,22 @@ function processComments() {
     for (var val of leaderboard) {
         leadDiv.innerHTML += '<p align="center">@'+val[1]+': '+val[0]+'</p>'
     }
+
+
+    var btn = document.getElementById("showNumbers");
+    btn.onclick = function() {
+        show = !show;
+        var cells = document.getElementsByClassName("cell")
+        console.log(show);
+        for (var i = 0; i < cells.length; i++) {
+            if (!show) {
+                cells[i].style.color="transparent"
+                cells[i].style.textShadow="none"
+            } else {
+                cells[i].style.color="white"
+                cells[i].style.textShadow="2px 2px #000000"
+            }
+        }
+    }
+
 }
