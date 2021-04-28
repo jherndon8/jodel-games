@@ -76,11 +76,13 @@ function processComments() {
     var scores = {};
     var leadDiv = document.getElementById("leaderboard");
     for (var com of comments) {
-        var s = com.msg.split(',');
+        var s = com.msg.split(/[ ,]+/);
         var x = s[0];
         var y = s[1];
         var c = s[2];
         if (c) c = c.trim();
+        else {
+        }
         if (x >=1 && x <=20 && y >= 1 && y <= 20 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
             last2[counter++ % 2] = com.user;
             pixels[20*(y-1)+(x-1)].style.backgroundColor=c;
