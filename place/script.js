@@ -32,7 +32,7 @@ function getPostData(postID, next) {
         url = url + "?next=" + next
     }
     else {
-    document.getElementById("postlink").innerHTML='<iframe frameborder="0" height="300px" width="600px" src="https://share.jodel.com/post/preview?postId=' + postID + '" style="border-radius:3px"></iframe>'
+    document.getElementById("postlink").innerHTML='<iframe frameborder="0" height="450px" width="600px" src="https://share.jodel.com/post/preview?postId=' + postID + '" style="border-radius:3px"></iframe>'
     }
     var xhr = new XMLHttpRequest();
     xhr.open('GET',url, true);
