@@ -6,6 +6,10 @@
     display: grid-inline;
 }
 
+button {
+    font-size: 30px;
+}
+
 .cell {
     width: 25px;
     height: 25px;
