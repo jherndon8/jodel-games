@@ -111,13 +111,10 @@ function processComments() {
     }
 
 
-    console.log("meh")
     var btn = document.getElementById("showNumbers");
-    console.log(btn)
     btn.onclick = function() {
         show = !show;
         var cells = document.getElementsByClassName("cell")
-        console.log(show);
         for (var i = 0; i < cells.length; i++) {
             if (!show) {
                 cells[i].style.color="transparent"
