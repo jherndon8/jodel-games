@@ -90,7 +90,8 @@ function processOneComment(com) {
         last2[counter++ % 2] = com.user;
         var pixel = pixels[20*(y-1)+(x-1)];
         if (!pixel) {console.log("Stupid @"+com.user+" tryna break my shit");return;}
-        pixel.style.backgroundColor=c;
+        pixel.style.backgroundColor = c;
+        pixel.title = c
         pixel.innerText = com.user;
         if (!scores[com.user])
         {
