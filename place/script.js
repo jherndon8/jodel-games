@@ -50,7 +50,7 @@ function getPostData(postID, next) {
             getPostData(postID, results.next);
         }
         else {
-            processComments();
+            processScore();
         }
         //console.log(results);
     }
@@ -67,6 +67,7 @@ function parse(resp) {
         comment.msg = post.getElementsByClassName("post-message")[0].innerHTML
         //comments.push(comment)
         processOneComment(comment);
+        comments.push(comment)
         console.log(comment);
     }
 }
@@ -100,7 +101,7 @@ function processOneComment(com) {
     }
 }
 
-function processComments() {
+function processScore() {
     var leaderboard = []
     for (var user in scores) {
         if (-user)
@@ -116,16 +117,29 @@ function processComments() {
     var btn = document.getElementById("showNumbers");
     btn.onclick = function() {
         show = !show;
-        var cells = document.getElementsByClassName("cell")
-        for (var i = 0; i < cells.length; i++) {
+        for (var i = 0; i < pixels.length; i++) {
             if (!show) {
-                cells[i].style.color="transparent"
-                cells[i].style.textShadow="none"
+                pixels[i].style.color="transparent"
+                pixels[i].style.textShadow="none"
             } else {
-                cells[i].style.color="white"
-                cells[i].style.textShadow="2px 2px #000000"
+                pixels[i].style.color="white"
+                pixels[i].style.textShadow="2px 2px #000000"
             }
         }
     }
+    btn = document.getElementById("playLoad")
+    btn.onclick = function() {
+        for (var i = 0; i < pixels.length; i++) {
+            pixels[i].innerText=".";
+            pixels[i].style.backgroundColor="white";
+        }
+        playOne(0);
+    }
+
+}
+function playOne(val) {
+    if (val >= comments.length) {return;}
+    processOneComment(comments[val++]);
+    setTimeout(playOne,5, val)
 
 }
