@@ -2,6 +2,10 @@ var pixels = new Array;
 var comments = new Array;
 var postID="6089db554d822801aa12a243";
 var show = false;
+var last2 = new Array;
+var counter = 0;
+var scores = {};
+var leadDiv = document.getElementById("leaderboard");
 init();
 function init() {
     var v = 20;
@@ -61,7 +65,8 @@ function parse(resp) {
         var comment = {};
         comment.user = post.getElementsByClassName("oj-text")[0].innerHTML
         comment.msg = post.getElementsByClassName("post-message")[0].innerHTML
-        comments.push(comment)
+        //comments.push(comment)
+        processOneComment(comment);
         console.log(comment);
     }
 }
@@ -72,33 +77,30 @@ const isColor = (strColor) => {
   return s.color !== '';
 }
 
-function processComments() {
-    var last2 = new Array;
-    var counter = 0;
-    var scores = {};
-    var leadDiv = document.getElementById("leaderboard");
-    for (var com of comments) {
-        var s = com.msg.split(/[ ,]+/);
-        var x = s[0];
-        var y = s[1];
-        var c = s[2];
-        if (c) c = c.trim();
-        else {
-        }
-        if (x >=1 && x <=20 && y >= 1 && y <= 20 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
-            last2[counter++ % 2] = com.user;
-            var pixel = pixels[20*(y-1)+(x-1)];
-            if (!pixel) {console.log("Stupid @"+com.user+" tryna break my shit");continue;}
-            pixel.style.backgroundColor=c;
-            pixel.innerText = com.user;
-            if (!scores[com.user])
-            {
-                scores[com.user] = 1;
-            } else {
-                scores[com.user]++;
-            }            
-        }
+function processOneComment(com) {
+    var s = com.msg.split(/[ ,]+/);
+    var x = s[0];
+    var y = s[1];
+    var c = s[2];
+    if (c) c = c.trim();
+    else {
     }
+    if (x >=1 && x <=20 && y >= 1 && y <= 20 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
+        last2[counter++ % 2] = com.user;
+        var pixel = pixels[20*(y-1)+(x-1)];
+        if (!pixel) {console.log("Stupid @"+com.user+" tryna break my shit");return;}
+        pixel.style.backgroundColor=c;
+        pixel.innerText = com.user;
+        if (!scores[com.user])
+        {
+            scores[com.user] = 1;
+        } else {
+            scores[com.user]++;
+        }            
+    }
+}
+
+function processComments() {
     var leaderboard = []
     for (var user in scores) {
         if (-user)
