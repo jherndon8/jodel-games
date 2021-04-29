@@ -130,6 +130,7 @@ function processScore() {
     }
     btn = document.getElementById("playLoad")
     btn.onclick = function() {
+        btn.disabled = true;
         for (var i = 0; i < pixels.length; i++) {
             pixels[i].innerText=".";
             pixels[i].style.backgroundColor="white";
@@ -139,8 +140,10 @@ function processScore() {
 
 }
 function playOne(val) {
-    if (val >= comments.length) {return;}
+    if (val >= comments.length) {
+        document.getElementById("playLoad").disabled = false;
+    }
     processOneComment(comments[val++]);
-    setTimeout(playOne,5, val)
+    setTimeout(playOne,0, val)
 
 }
