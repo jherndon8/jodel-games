@@ -87,8 +87,10 @@ function processComments() {
         }
         if (x >=1 && x <=20 && y >= 1 && y <= 20 && isColor(c) && (!last2.includes(com.user) || com.user=="OJ")) {
             last2[counter++ % 2] = com.user;
-            pixels[20*(y-1)+(x-1)].style.backgroundColor=c;
-            pixels[20*(y-1)+(x-1)].innerText = com.user;
+            var pixel = pixels[20*(y-1)+(x-1)];
+            if (!pixel) {console.log("Stupid @"+com.user+" tryna break my shit");continue;}
+            pixel.style.backgroundColor=c;
+            pixel.innerText = com.user;
             if (!scores[com.user])
             {
                 scores[com.user] = 1;
