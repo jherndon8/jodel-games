@@ -163,6 +163,7 @@ function processScore() {
         btn.disabled = true;
         for (var i = 0; i < pixels.length; i++) {
             pixels[i].getElementsByClassName("owner")[0].innerText=".";
+            pixels[i].getElementsByClassName("emoji")[0].innerText="";
             pixels[i].style.backgroundColor="white";
             pixels[i].getElementsByClassName("owner")[0].style.display = "none"
             show = false;
