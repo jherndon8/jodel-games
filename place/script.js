@@ -161,6 +161,7 @@ function processScore() {
 function playOne(val) {
     if (val >= comments.length) {
         document.getElementById("playLoad").disabled = false;
+        return;
     }
     processOneComment(comments[val++]);
     setTimeout(playOne,0, val)
