@@ -107,7 +107,12 @@ function processOneComment(com) {
         pixel.title = c
         pixel.getElementsByClassName("owner")[0].innerText = com.user;
         if (/\p{Emoji}/u.test(e)){
-            pixel.getElementsByClassName("emoji")[0].innerHTML = " &#x"+((e.charCodeAt(0) - 0xD800) * 0x400 + (e.charCodeAt(1) - 0xDC00) + 0x10000).toString(16)+"; "
+            if (e.charCodeAt(1)) {
+                pixel.getElementsByClassName("emoji")[0].innerHTML = " &#x"+((e.charCodeAt(0) - 0xD800) * 0x400 + (e.charCodeAt(1) - 0xDC00) + 0x10000).toString(16)+"; "
+            }
+            else {
+                pixel.getElementsByClassName("emoji")[0].innerHTML = " &#x" + (e.charCodeAt(0)).toString(16)+"; "
+            }
         }
         else {
             pixel.getElementsByClassName("emoji")[0].innerHTML = ""
