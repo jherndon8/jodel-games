@@ -17,6 +17,7 @@ function init() {
         for(var x = 1; x <= v; x++){
             var cell = document.createElement("div");
             cell.className = "cell";
+            cell.style.rightt = 25 * (x)
             //cell.innerText=".";
             pixels[c++] = cell
             row.appendChild(cell);
