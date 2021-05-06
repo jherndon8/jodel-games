@@ -11,13 +11,17 @@ function init() {
     var v = 20;
     c = 0;
     var e = document.getElementsByClassName("container")[0];
+    var container= document.getElementsByClassName("container")[0];
+    var containerLeft = container.offsetLeft + 3;
+    var containerTop = container.offsetTop + 3;
     for(var i = 0; i < v; i++){
         var row = document.createElement("div");
         row.className = "row";
         for(var x = 1; x <= v; x++){
             var cell = document.createElement("div");
             cell.className = "cell";
-            cell.style.rightt = 25 * (x)
+            cell.style.left = containerLeft + 25 * (x-1) + "px"
+            cell.style.top= containerTop + 25 * (i) + "px"
             //cell.innerText=".";
             pixels[c++] = cell
             row.appendChild(cell);
