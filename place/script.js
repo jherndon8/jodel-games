@@ -105,6 +105,9 @@ function processOneComment(com) {
         if (/\p{Emoji}/u.test(e)){
             pixel.getElementsByClassName("emoji")[0].innerHTML = " &#x"+((e.charCodeAt(0) - 0xD800) * 0x400 + (e.charCodeAt(1) - 0xDC00) + 0x10000).toString(16)+"; "
         }
+        else {
+            pixel.getElementsByClassName("emoji")[0].innerHTML = ""
+        }
         if (!scores[com.user])
         {
             scores[com.user] = 1;
