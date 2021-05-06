@@ -17,9 +17,16 @@ function init() {
         for(var x = 1; x <= v; x++){
             var cell = document.createElement("div");
             cell.className = "cell";
-            cell.innerText=".";
+            //cell.innerText=".";
             pixels[c++] = cell
             row.appendChild(cell);
+            var owner = document.createElement("div")
+            var emoji = document.createElement("div")
+            owner.classList.add("owner")
+            emoji.classList.add("emoji")
+            owner.innerText="."
+            cell.appendChild(owner)
+            cell.appendChild(emoji)
         }
         e.appendChild(row);
     }
@@ -83,6 +90,7 @@ function processOneComment(com) {
     var x = s[0];
     var y = s[1];
     var c = s[2];
+    var e = s[3];
     if (c) c = c.trim();
     else {
     }
@@ -92,7 +100,10 @@ function processOneComment(com) {
         if (!pixel) {console.log("Stupid @"+com.user+" tryna break my shit");return;}
         pixel.style.backgroundColor = c;
         pixel.title = c
-        pixel.innerText = com.user;
+        pixel.getElementsByClassName("owner")[0].innerText = com.user;
+        if (/\p{Emoji}/u.test(e)){
+            pixel.getElementsByClassName("emoji")[0].innerHTML = " &#x"+((e.charCodeAt(0) - 0xD800) * 0x400 + (e.charCodeAt(1) - 0xDC00) + 0x10000).toString(16)+"; "
+        }
         if (!scores[com.user])
         {
             scores[com.user] = 1;
@@ -118,13 +129,19 @@ function processScore() {
     var btn = document.getElementById("showNumbers");
     btn.onclick = function() {
         show = !show;
-        for (var i = 0; i < pixels.length; i++) {
+        var owners = document.getElementsByClassName("owner");
+        var emojis = document.getElementsByClassName("emoji");
+        for (var i = 0; i < owners.length; i++) {
             if (!show) {
-                pixels[i].style.color="transparent"
-                pixels[i].style.textShadow="none"
+                owners[i].style.display = "none"
+                emojis[i].style.display = "block"
+                //owners[i].style.color="transparent"
+                //owners[i].style.textShadow="none"
             } else {
-                pixels[i].style.color="white"
-                pixels[i].style.textShadow="2px 2px #000000"
+                owners[i].style.display = "block"
+                emojis[i].style.display = "none"
+                //owners[i].style.color="white"
+                //owners[i].style.textShadow="2px 2px #000000"
             }
         }
     }
@@ -132,8 +149,10 @@ function processScore() {
     btn.onclick = function() {
         btn.disabled = true;
         for (var i = 0; i < pixels.length; i++) {
-            pixels[i].innerText=".";
+            pixels[i].getElementsByClassName("owner")[0].innerText=".";
             pixels[i].style.backgroundColor="white";
+            pixels[i].getElementsByClassName("owner")[0].style.display = "none"
+            show = false;
         }
         playOne(0);
     }

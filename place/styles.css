@@ -5,9 +5,21 @@
     height: 500px;
     display: grid-inline;
 }
+.owner {
+    text-shadow: 2px 2px black;
+    color: white;
+    display: none;
+    height: 25px;
+}
 
 button {
     font-size: 30px;
+}
+
+.emoji {
+    font-size: 25px;
+    height: 25px;
+    width: 100%;
 }
 
 .cell {
@@ -15,9 +27,7 @@ button {
     height: 25px;
     display: inline-block;
     font-size: 10px;
-    text-shadow: none;
-    color: transparent;
-    text-align: center
+    text-align: center;
 }
 
 .row {
