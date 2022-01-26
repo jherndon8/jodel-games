@@ -45,6 +45,7 @@ function parse(resp) {
     var dp = new DOMParser()
     var doc = dp.parseFromString(resp, "text/html")
     var posts = doc.getElementsByClassName("post-block")
+    var imgs = doc.getElementsByClassName("image");
     for (var post of posts) {
         counter++;
         var comment = {};
@@ -54,6 +55,12 @@ function parse(resp) {
         processOneComment(comment);
         comments.push(comment)
         //console.log(comment);
+    }
+    for (var img of imgs) {
+        counter++;
+        var comment = {msg: ""};
+        comment.user = post.getElementsByClassName("oj-text")[0].innerHTML
+        processOneComment(comment);
     }
     document.getElementById("loading").innerHTML="Loaded " + counter + " comments...";
 }
