@@ -1,0 +1,38 @@
+.container {
+    margin: auto;
+    border-style: solid;
+    width: 500px;
+    height: 500px;
+    display: grid-inline;
+}
+.owner {
+    text-shadow: 2px 2px black;
+    color: white;
+    display: none;
+    height: 25px;
+}
+
+button {
+    font-size: 30px;
+}
+
+.emoji {
+    font-size: 22px;
+    height: 25px;
+    width: 100%;
+    vertical-align: top;
+}
+
+.cell {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    font-size: 10px;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+}
+
+.row {
+    height: 25px;
+}
