@@ -5,11 +5,15 @@ var show = false;
 var last2 = new Array;
 var counter = 0;
 var scores = {};
+var votes = {};
 var leadDiv = document.getElementById("leadTable");
 var mentions = {};
 var data = {};
 var physics = false;
 init();
+console.log("Hey, you there... snooping around")
+console.log("There seems to be fewer comments loading than what it says there are in the app.")
+console.log("I'll put you in the credits if you can figure out why and tell me how to make the data match the number of comments that the app actually says")
 function init() {
     getPostData(postID);
 }
@@ -44,6 +48,7 @@ function getPostData(postID, next) {
 function parse(resp) {
     var dp = new DOMParser()
     var doc = dp.parseFromString(resp, "text/html")
+    //console.log(doc);
     var posts = doc.getElementsByClassName("post-block")
     var imgs = doc.getElementsByClassName("image");
     for (var post of posts) {
@@ -51,6 +56,7 @@ function parse(resp) {
         var comment = {};
         comment.user = post.getElementsByClassName("oj-text")[0].innerHTML
         comment.msg = post.getElementsByClassName("post-message")[0].innerHTML
+        comment.votes = post.getElementsByClassName("votes")[0].innerHTML
         //comments.push(comment)
         processOneComment(comment);
         comments.push(comment)
@@ -60,6 +66,7 @@ function parse(resp) {
         counter++;
         var comment = {msg: ""};
         comment.user = post.getElementsByClassName("oj-text")[0].innerHTML
+        comment.votes = post.getElementsByClassName("votes")[0].innerHTML
         processOneComment(comment);
     }
     document.getElementById("loading").innerHTML="Loaded " + counter + " comments...";
@@ -75,8 +82,10 @@ function processOneComment(com) {
     if (!scores[com.user])
     {
         scores[com.user] = 1;
+        votes[com.user] = +com.votes;
     } else {
         scores[com.user]++;
+        votes[com.user] += +com.votes;
     }            
     
     if (!(com.user)) {return;}
@@ -109,7 +118,7 @@ function processOneComment(com) {
 function processScore() {
     var leaderboard = []
     for (var user in scores) {
-        data[user] = {score: scores[user], mentions: 0, mentioned: 0}
+        data[user] = {score: scores[user], mentions: 0, mentioned: 0, votes: votes[user]}
     }
     for (mention of Object.keys(mentions)) {
         var a = mention.split(",");
@@ -119,13 +128,14 @@ function processScore() {
         }
     }
     for (var user in scores) {
-        leaderboard.push([+scores[user],user,data[user].mentions,data[user].mentioned])
+        leaderboard.push([+scores[user],user, data[user].mentions,
+            data[user].mentioned, +votes[user]])
     }
     leaderboard.sort(function(a,b){return a[0]-b[0]});
     leaderboard.reverse();
     var i = 1;
     for (var val of leaderboard) {
-        leadDiv.innerHTML += '<tr><td>'+i+'</td><td>@'+val[1]+'</td><td> '+val[0]+'</td><td>'+val[2]+'</td><td>'+ val[3]+'</td></tr>'
+        leadDiv.innerHTML += '<tr><td>'+i+'</td><td>@'+val[1]+'</td><td> '+val[0]+'</td><td>'+val[2]+'</td><td>'+ val[3] +'</td><td>'+ val[4]+'</td></tr>'
         i += 1;
     }
     draw();
