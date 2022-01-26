@@ -7,6 +7,8 @@ var counter = 0;
 var scores = {};
 var leadDiv = document.getElementById("leadTable");
 var mentions = {};
+var data = {};
+var physics = false;
 init();
 function init() {
     getPostData(postID);
@@ -106,7 +108,6 @@ function processOneComment(com) {
 
 function processScore() {
     var leaderboard = []
-    data = {}
     for (var user in scores) {
         data[user] = {score: scores[user], mentions: 0, mentioned: 0}
     }
@@ -127,6 +128,68 @@ function processScore() {
         leadDiv.innerHTML += '<tr><td>'+i+'</td><td>@'+val[1]+'</td><td> '+val[0]+'</td><td>'+val[2]+'</td><td>'+ val[3]+'</td></tr>'
         i += 1;
     }
-
+    draw();
 }
+
+var nodes = null;
+var edges = null;
+var network = null;
+
+function draw() {
+  // create people.
+  // value corresponds with their number of comments
+  nodes = [];
+    //{ id: 2, value: 31, label: "Alston" },
+  for (user in data) {
+      nodes.push({id: user, value: Math.sqrt(data[user].score), label: "@"+user})
+  }
+
+  nodes = new vis.DataSet(nodes);
+
+  // create connections between people
+  // value corresponds with the amount of contact between two people
+  edges = []
+    //{ from: 2, to: 8, value: 3 },
+  for (mention of Object.keys(mentions)) {
+      a = mention.split(',');
+      edges.push({from: a[0], to: a[1], value: mentions[mention], arrows: {enabled: true, type: "arrow"}})
+  }
+
+  edges = new vis.DataSet(edges);
+
+  // Instantiate our network object.
+  var container = document.getElementById("mynetwork");
+  var networkData = {
+    nodes: nodes,
+    edges: edges,
+  };
+  var options = {
+    nodes: {
+      shape: "dot",
+      scaling: {
+        min: 3,
+        max: 40,
+      },
+    },
+    physics: {
+        adaptiveTimestep: true,
+        stabilization: {
+            iterations: 350 
+        }
+    }
+  };
+  network = new vis.Network(container, networkData, options);
+  network.on("stabilizationIterationsDone", function () {
+    network.setOptions( { physics: false } );
+    var btn = document.getElementById("physicsToggle"); 
+    btn.style.display = "block";
+    btn.onclick = function() {
+        network.setOptions({physics: !physics});
+        physics = !physics;
+    }
+
+});
+}
+
+
 

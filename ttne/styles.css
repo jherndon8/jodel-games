@@ -40,3 +40,9 @@ button {
 table, td, th {
     border: 1px solid black;
 }
+
+#mynetwork {
+    border: 1px solid blue;
+    width: 600px;
+    height: 400px;
+}
