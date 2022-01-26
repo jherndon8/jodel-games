@@ -5,7 +5,8 @@ var show = false;
 var last2 = new Array;
 var counter = 0;
 var scores = {};
-var leadDiv = document.getElementById("leaderboard");
+var leadDiv = document.getElementById("leadTable");
+var mentions = {};
 init();
 function init() {
     getPostData(postID);
@@ -75,17 +76,56 @@ function processOneComment(com) {
     } else {
         scores[com.user]++;
     }            
+    
+    if (!(com.user)) {return;}
+
+    for (var mention of [...new Set(com.msg.match(/@[0-9]+/g))]) {
+        mention = +mention.substr(1);
+        //console.log(mention, com.msg, user)
+        if (mention in scores && mention != com.user) {
+            var id = com.user + "," + mention;
+            if (id in mentions) {
+                mentions[id] += 1;
+            }
+            else {
+                mentions[id] = 1;
+            }
+        }
+    }
+    if (com.msg.match(/@[oO][jJ]/) || com.msg.match(/@0/)) {
+        id = com.user + "," + "OJ";
+        if (id in mentions) {
+            mentions[id] += 1;
+        }   
+        else {
+            mentions[id] = 1;
+        }   
+    }
+
 }
 
 function processScore() {
     var leaderboard = []
+    data = {}
     for (var user in scores) {
-        leaderboard.push([+scores[user],user])
+        data[user] = {score: scores[user], mentions: 0, mentioned: 0}
+    }
+    for (mention of Object.keys(mentions)) {
+        var a = mention.split(",");
+        if (a[0] in data  && a[1] in data) {
+            data[a[0]].mentions += mentions[mention];
+            data[a[1]].mentioned += mentions[mention];
+        }
+    }
+    for (var user in scores) {
+        leaderboard.push([+scores[user],user,data[user].mentions,data[user].mentioned])
     }
     leaderboard.sort(function(a,b){return a[0]-b[0]});
     leaderboard.reverse();
+    var i = 1;
     for (var val of leaderboard) {
-        leadDiv.innerHTML += '<p align="center">@'+val[1]+': '+val[0]+'</p>'
+        leadDiv.innerHTML += '<tr><td>'+i+'</td><td>@'+val[1]+'</td><td> '+val[0]+'</td><td>'+val[2]+'</td><td>'+ val[3]+'</td></tr>'
+        i += 1;
     }
 
 }
