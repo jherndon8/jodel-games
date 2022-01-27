@@ -66,8 +66,9 @@ function parse(resp) {
     for (var img of imgs) {
         counter++;
         var comment = {msg: ""};
-        comment.user = post.getElementsByClassName("oj-text")[0].innerHTML
-        comment.votes = post.getElementsByClassName("votes")[0].innerHTML
+        comment.user = img.getElementsByClassName("oj-text")[0].innerHTML
+        comment.votes = img.getElementsByClassName("votes")[0].innerHTML
+        //console.log("image", comment);
         processOneComment(comment);
     }
     document.getElementById("loading").innerHTML="Loaded " + counter + " comments...";
