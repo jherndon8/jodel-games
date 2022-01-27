@@ -122,6 +122,7 @@ function processOneComment(com) {
 }
 
 function processScore() {
+    document.getElementById("loading").innerHTML="Comments fetched. Rendering graph..."
     var leaderboard = []
     for (var user in scores) {
         data[user] = {score: scores[user], mentions: 0, mentioned: 0, votes: votes[user]}
@@ -212,6 +213,7 @@ function draw() {
         network.setOptions({physics: !physics});
         physics = !physics;
     }
+    document.getElementById("loading").innerHTML="Complete";
 
 });
 }
