@@ -160,7 +160,7 @@ function draw() {
   for (user in data) {
       node = {id: user, value: Math.sqrt(data[user].score), label: "@"+user};
       if (user in colors) {
-          console.log(user, colors[user]);
+          //console.log(user, colors[user]);
           node.color = colors[user]
       }
       nodes.push(node);
