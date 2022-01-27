@@ -6,6 +6,7 @@ var last2 = new Array;
 var counter = 0;
 var scores = {};
 var votes = {};
+var colors = {};
 var leadDiv = document.getElementById("leadTable");
 var mentions = {};
 var data = {};
@@ -73,6 +74,7 @@ function parse(resp) {
 }
 
 const isColor = (strColor) => {
+  if (strColor == +strColor) return false; 
   const s = new Option().style;
   s.color = strColor;
   return s.color !== '';
@@ -87,6 +89,10 @@ function processOneComment(com) {
         scores[com.user]++;
         votes[com.user] += +com.votes;
     }            
+    if (isColor(com.msg)) {
+        //console.log(com);
+        colors[com.user] = com.msg;
+    }
     
     if (!(com.user)) {return;}
 
@@ -151,7 +157,12 @@ function draw() {
   nodes = [];
     //{ id: 2, value: 31, label: "Alston" },
   for (user in data) {
-      nodes.push({id: user, value: Math.sqrt(data[user].score), label: "@"+user})
+      node = {id: user, value: Math.sqrt(data[user].score), label: "@"+user};
+      if (user in colors) {
+          console.log(user, colors[user]);
+          node.color = colors[user]
+      }
+      nodes.push(node);
   }
 
   nodes = new vis.DataSet(nodes);
@@ -162,7 +173,11 @@ function draw() {
     //{ from: 2, to: 8, value: 3 },
   for (mention of Object.keys(mentions)) {
       a = mention.split(',');
-      edges.push({from: a[0], to: a[1], value: mentions[mention], arrows: {enabled: true, type: "arrow"}})
+      var edge ={from: a[0], to: a[1], value: mentions[mention], arrows: {enabled: true, type: "arrow"}};
+      if (a[0] in colors) {
+          edge.color = colors[a[0]]
+      }
+      edges.push(edge);
   }
 
   edges = new vis.DataSet(edges);
