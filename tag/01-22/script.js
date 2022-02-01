@@ -12,9 +12,6 @@ var mentions = {};
 var data = {};
 var physics = false;
 init();
-console.log("Hey, you there... snooping around")
-console.log("There seems to be fewer comments loading than what it says there are in the app.")
-console.log("I'll put you in the credits if you can figure out why and tell me how to make the data match the number of comments that the app actually says")
 function init() {
     getPostData(postID);
 }
