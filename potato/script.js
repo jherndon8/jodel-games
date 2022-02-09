@@ -134,13 +134,20 @@ function processOneComment(com) {
         }
     }
     if (com.msg.match(/@[oO][jJ]/) || com.msg.match(/@0/)) {
-        id = com.user + "," + "OJ";
-        if (id in mentions) {
-            mentions[id] += 1;
-        }   
-        else {
-            mentions[id] = 1;
-        }   
+            var mention = "OJ";
+            var potato = potatoes[com.user].pop();
+            if (potato) {
+                potatoes[mention].push(potato + "," + mention)
+                passes[com.user]++;
+                catches[mention]++;
+                var id = com.user + "," + mention;
+                if (id in mentions) {
+                    mentions[id] += 1;
+                }
+                else {
+                    mentions[id] = 1;
+                }
+            }
     }
 
 }
