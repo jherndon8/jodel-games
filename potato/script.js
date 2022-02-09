@@ -151,7 +151,7 @@ function processScore() {
     for (var i of Object.keys(potatoes)) {
         for (var p of potatoes[i]) {
             console.log(p);
-            if (p.split(',').length > 2) 
+            if (p.split(',').length > 1) 
             {
                 passedPotatoes.push(p);
                 potatoTable.innerHTML += "<h4>"+p.split(',').join('->') + "</h4>";
