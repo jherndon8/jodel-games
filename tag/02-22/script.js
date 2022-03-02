@@ -52,8 +52,12 @@ function parse(resp) {
     for (var post of posts) {
         counter++;
         var comment = {};
-        comment.user = post.getElementsByClassName("oj-text")[0].innerHTML
+        var ojText = post.getElementsByClassName("oj-text");
+        comment.user = ojText[0].innerHTML
         comment.msg = post.getElementsByClassName("post-message")[0].innerHTML
+        if (ojText.length > 1) {
+            comment.msg = comment.msg + "@"+ojText[1].innerHTML
+        }
         comment.votes = post.getElementsByClassName("votes")[0].innerHTML
         //comments.push(comment)
         processOneComment(comment);
