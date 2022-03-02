@@ -46,9 +46,11 @@ function getPostData(postID, next) {
 function parse(resp) {
     var dp = new DOMParser()
     var doc = dp.parseFromString(resp, "text/html")
-    //console.log(doc);
-    var posts = doc.getElementsByClassName("post-block")
-    var imgs = doc.getElementsByClassName("image");
+    console.log(doc);
+    for (var line of doc.getElementsByClassName("list-group-item")) {
+    var posts = line.getElementsByClassName("post-block")
+    var imgs = null;
+    if (line.classList.contains("image")) imgs = line;
     for (var post of posts) {
         counter++;
         var comment = {};
@@ -64,15 +66,17 @@ function parse(resp) {
         comments.push(comment)
         //console.log(comment);
     }
-    for (var img of imgs) {
+    if (imgs) {
         counter++;
         var comment = {msg: ""};
-        comment.user = img.getElementsByClassName("oj-text")[0].innerHTML
-        comment.votes = img.getElementsByClassName("votes")[0].innerHTML
+        comment.user = imgs.getElementsByClassName("oj-text")[0].innerHTML
+        comment.votes = imgs.getElementsByClassName("votes")[0].innerHTML
         //console.log("image", comment);
         processOneComment(comment);
     }
+    
     document.getElementById("loading").innerHTML="Loaded " + counter + " comments...";
+    }
 }
 
 const isColor = (strColor) => {
@@ -86,6 +90,7 @@ function processOneComment(com) {
     if (!scores[com.user])
     {
         scores[com.user] = 1;
+        //console.log(com.user + "..."); 
         votes[com.user] = +com.votes;
     } else {
         scores[com.user]++;
@@ -100,7 +105,7 @@ function processOneComment(com) {
 
     for (var mention of [...new Set(com.msg.match(/@[0-9]+/g))]) {
         mention = +mention.substr(1);
-        //console.log(mention, com.msg, user)
+        //console.log(mention, com.msg, com.user)
         if (mention in scores && mention != com.user) {
             var id = com.user + "," + mention;
             if (id in mentions) {
