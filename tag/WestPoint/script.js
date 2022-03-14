@@ -181,7 +181,7 @@ function draw() {
     //{ from: 2, to: 8, value: 3 },
   for (mention of Object.keys(mentions)) {
       a = mention.split(',');
-      var edge ={from: a[0], to: a[1], value: mentions[mention], arrows: {to:{enabled: true, type: "arrow"}}};
+      var edge ={from: a[0], to: a[1], value: Math.sqrt(mentions[mention]), arrows: {to:{enabled: true, type: "arrow"}}};
       if (a[0] in colors) {
           edge.color = colors[a[0]]
       }

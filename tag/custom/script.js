@@ -1,6 +1,6 @@
 var pixels = new Array;
 var comments = new Array;
-var postID=prompt("Enter post id from shared.jodel.com/post?postid=...");
+var postID;
 var show = false;
 var last2 = new Array;
 var counter = 0;
@@ -12,7 +12,23 @@ var mentions = {};
 var data = {};
 var physics = false;
 init();
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    console.log(xmlHttp.responseURL);
+    return xmlHttp.responseURL;
+}
+
 function init() {
+
+    postID = new URL(window.location.href).searchParams.get('id');
+    if (!postID) {
+        postID=new URL(httpGet(prompt("Enter share link from jodel"))).searchParams.get('postId');
+        console.log(postID);
+    }
     document.getElementById("previewPost").src="https://share.jodel.com/post/preview?postId="+postID
     getPostData(postID);
 }
@@ -173,7 +189,7 @@ function draw() {
     //{ from: 2, to: 8, value: 3 },
   for (mention of Object.keys(mentions)) {
       a = mention.split(',');
-      var edge ={from: a[0], to: a[1], value: mentions[mention], arrows: {to:{enabled: true, type: "arrow"}}};
+      var edge ={from: a[0], to: a[1], value: Math.sqrt(Math.sqrt(mentions[mention])), arrows: {to:{enabled: true, type: "arrow"}}};
       if (a[0] in colors) {
           edge.color = colors[a[0]]
       }
